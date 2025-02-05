@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>끝말잇기</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="root">
+			<div>{{word}}</div>
+			<form v-on:submit="onSubmitForm">
+				<input type="text" ref="answer" v-model="value" />
+				<button type="submit">입력</button>
+			</form>
+			<div>{{ value }}</div>
+			<div>{{ result }}</div>
+		</div>
+		<script>
+			// 복습 : 뷰에게 태그 통제권을 넘긴다 !
+			const app = new Vue({
+				el: "#root",
+				data: {
+					word: "햄버거",
+					value: "",
+					result: "",
+				},
+				methods: {
+					onSubmitForm(e) {
+						e.preventDefault();
+						if (this.word[this.word.length - 1] === this.value[0]) {
+							this.result = "딩동댕동";
+							this.word = this.value;
+						} else {
+							this.result = "땡";
+						}
+						this.value = "";
+						this.$refs.answer.focus();
+					},
+				},
+			});
+		</script>
+	</body>
+</html>

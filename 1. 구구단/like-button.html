@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>좋아요</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="root">
+			<div v-if="liked">좋아요 눌렀음</div>
+			<button v-else v-on:click="onClickButton">Like</button>
+		</div>
+		<script>
+			// 화면 조작을 내가 코드를 통해 하지 않아도, 데이터를 통해 데이터에 맞는 화면을 보여준다 (뷰, 리액트)
+			const app = new Vue({
+				// vue가 root를 통제할 수 있도록 함
+				el: "#root",
+				data: {
+					// 데이터 = 바뀌는 거
+					// 뷰가 관리해야할 변수들을 이곳에
+					// liked(좋아요를 눌렀는지 안눌렀는지 판단하는 데이터)의 초기 데이터
+					liked: false,
+				},
+				methods: {
+					onClickButton() {
+						this.liked = true;
+					},
+				},
+			});
+		</script>
+	</body>
+</html>
