@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>끝말잇기(컴포넌트버전)</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="root">
+			<!--vue의 HTML부분은 케밥케이스로 작성-->
+			<word-relay start-word="햄버거"></word-relay>
+			<word-relay start-word="오므라이스"></word-relay>
+			<word-relay start-word="초밥"></word-relay>
+		</div>
+		<script>
+			// 컴포넌트화를 통해 재사용. 달라지는 값은 props를 사용한다.
+			Vue.component("word-relay", {
+				// 전역 컴포넌트
+				// 컴포넌트의 템플릿은 무조건 부모를 만들어서 감싸주어야 한다
+				template: `
+					<div>
+						<div>{{word}}</div>
+						<form v-on:submit="onSubmitForm">
+							<input type="text" ref="answer" v-model="value" />
+							<button type="submit">입력</button>
+						</form>
+						<div>{{ value }}</div>
+						<div>{{ result }}</div>
+					</div>
+				`,
+				props: ["startWord"],
+				data() {
+					// 컴포넌트에서 데이터를 함수로 만들어야 하는 이유 : 여러번 사용되는걸 전제로 하는 컴포넌트 -> 각각의 컴포넌트마다 데이터가 달라야 한다 -> 데이터가 분리되지 않는 현상을 막기 위해
+					console.log(this);
+					return {
+						word: this.startWord,
+						value: "",
+						result: "",
+					};
+				},
+				methods: {
+					onSubmitForm(e) {
+						e.preventDefault();
+						if (this.word[this.word.length - 1] === this.value[0]) {
+							this.result = "딩동댕동";
+							this.word = this.value;
+						} else {
+							this.result = "땡";
+						}
+						this.value = "";
+						this.$refs.answer.focus();
+					},
+				},
+			});
+		</script>
+		<script>
+			// 복습 : 뷰에게 태그 통제권을 넘긴다 ! (뷰 인스턴스)
+			const app = new Vue({
+				el: "#root",
+			});
+		</script>
+	</body>
+</html>
