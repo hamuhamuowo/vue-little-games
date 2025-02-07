@@ -5,7 +5,7 @@
 		<div>
 			<div>
 				평균 시간 :
-				{{ result.reduce((acc, cur) => acc + cur, 0) / result.length || 0 }}ms
+				{{ average }}ms
 			</div>
 			<button @click="onReset">리셋</button>
 		</div>
@@ -23,6 +23,16 @@ export default {
 			state: "waiting",
 			message: "클릭해서 시작하세요",
 		};
+	},
+	computed: {
+		average() {
+			// 일반 데이터를 가공해서 쓸 때 computed를 사용한다
+			// 왜 굳이? 이 값은 캐싱되기 때문에. 예를들어 message값이 바뀌면 재실행되는데 계산식까지도 다 재실행되게 된다.
+			// 만약 계산식이 오랜 시간이 걸리는 계산식이라고 한다면, message만 바꿨는데 계산식까지 오랜 시간 재실행되는 것. -> 이를 방지하기 위해 computed를 사용해서 캐싱된 값을 재사용
+			return (
+				this.result.reduce((acc, cur) => acc + cur, 0) / this.result.length || 0
+			);
+		},
 	},
 	methods: {
 		onReset() {
