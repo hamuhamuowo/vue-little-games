@@ -2,7 +2,7 @@
 	<div>
 		<!--v-bind:class = :class-->
 		<div id="screen" :class="state" @click="onClickScreen">{{ message }}</div>
-		<template v-show="result.length">
+		<template v-if="result.length">
 			<!--v-show는 display:none으로 안보이게 해준다면, v-if는 태그 자체가 존재하지 않는 형태로 보이지 않게 한다-->
 			<!--태그 하나의 유무는 전체 레이아웃에 영향을 끼칠 수 있으므로 각각 적재적소에 활용하도록 한다-->
 			<div>
