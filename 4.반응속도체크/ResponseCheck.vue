@@ -2,13 +2,17 @@
 	<div>
 		<!--v-bind:class = :class-->
 		<div id="screen" :class="state" @click="onClickScreen">{{ message }}</div>
-		<div>
+		<template v-show="result.length">
+			<!--v-show는 display:none으로 안보이게 해준다면, v-if는 태그 자체가 존재하지 않는 형태로 보이지 않게 한다-->
+			<!--태그 하나의 유무는 전체 레이아웃에 영향을 끼칠 수 있으므로 각각 적재적소에 활용하도록 한다-->
 			<div>
 				평균 시간 :
 				{{ average }}ms
 			</div>
 			<button @click="onReset">리셋</button>
-		</div>
+		</template>
+		<!--무의미한 div 태그 사용시에 template로 대체해도 된다. 템플릿은 없는셈 쳐지는 형태가 된다(해당 코드에서는 메세지-평균시간-리셋이 형제 요소가 된다)-->
+		<!--주의 : 가장 상위 템플릿 태그 바로 밑에는 템플릿태그를 사용할 수 없다-->
 	</div>
 </template>
 <script>
