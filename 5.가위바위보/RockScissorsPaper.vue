@@ -16,6 +16,19 @@ const rspCoords = {
 	가위: "-142px",
 	보: "-284px",
 };
+
+const scores = {
+	가위: 1,
+	바위: 0,
+	보: -1,
+};
+
+const computerChoice = (imgCoord) => {
+	return Object.entries(rspCoords).find(function (v) {
+		return v[1] === imgCoord;
+	})[0];
+};
+
 let interval = null;
 
 export default {
@@ -36,8 +49,34 @@ export default {
 		},
 	},
 	methods: {
+		changeHand() {
+			interval = setInterval(() => {
+				if (this.imgCoord === rspCoords.바위) {
+					this.imgCoord = rspCoords.가위;
+				} else if (this.imgCoord === rspCoords.가위) {
+					this.imgCoord = rspCoords.보;
+				} else if (this.imgCoord === rspCoords.보) {
+					this.imgCoord = rspCoords.바위;
+				}
+			}, 100);
+		},
 		onClickButton(choice) {
-			this.imgCoord = rspCoords[choice];
+			clearInterval(interval); // 바위가위보 잠깐 멈춰주기(승패 알기 위함)
+			const myScore = scores[choice];
+			const cpuScore = scores[computerChoice(this.imgCoord)];
+			const diff = myScore - cpuScore;
+			if (diff === 0) {
+				this.result = "비겻슴다";
+			} else if ([-1, 2].includes(diff)) {
+				this.result = "이겻슴다";
+				this.score++;
+			} else {
+				this.result = "졋슴다";
+				this.score--;
+			}
+			setTimeout(() => {
+				this.changeHand();
+			}, 1000);
 		},
 	},
 	created() {
@@ -45,15 +84,7 @@ export default {
 	},
 	mounted() {
 		// 화면을 그릴 때 (DOM) => 화면 조작시, 화면에 표시되어야 접근이 가능하기 때문에 안전성을 위해서는 여기서!
-		interval = setInterval(() => {
-			if (this.imgCoord === rspCoords.바위) {
-				this.imgCoord = rspCoords.가위;
-			} else if (this.imgCoord === rspCoords.가위) {
-				this.imgCoord = rspCoords.보;
-			} else if (this.imgCoord === rspCoords.보) {
-				this.imgCoord = rspCoords.바위;
-			}
-		}, 100);
+		this.changeHand();
 	},
 	beforeUpdated() {},
 	updated() {
