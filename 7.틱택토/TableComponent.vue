@@ -4,7 +4,7 @@
 			v-for="(rowData, i) in tableData"
 			:row-data="rowData"
 			:row-index="i"
-			:key="rowData"
+			:key="i"
 		></tr-component>
 	</table>
 </template>

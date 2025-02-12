@@ -1,5 +1,8 @@
 <template>
-	<table-component :table-data="tableData" />
+	<div>
+		<table-component :table-data="tableData" />
+		<div>{{ turn }}</div>
+	</div>
 </template>
 
 <script>
@@ -11,10 +14,11 @@ export default {
 	data() {
 		return {
 			tableData: [
-				["1", "2", "3"],
-				["4", "5", "6"],
-				["7", "8", "9"],
+				["", "", ""],
+				["", "", ""],
+				["", "", ""],
 			],
+			turn: "O",
 		};
 	},
 	methods: {},
@@ -23,4 +27,14 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+table {
+	border-collapse: collapse;
+}
+td {
+	border: 1px solid #000;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+}
+</style>
